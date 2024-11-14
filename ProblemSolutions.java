@@ -1,7 +1,7 @@
 
 /******************************************************************
  *
- *   YOUR NAME / SECTION NUMBER
+ *   ALEX GIERUT / 002
  *
  *   This java file contains the problem solutions for the methods lastBoulder,
  *   showDuplicates, and pair methods. You should utilize the Java Collection
@@ -64,11 +64,17 @@ public class ProblemSolutions {
      */
 
   public static int lastBoulder(int[] boulders) {
-
-      //
-      // ADD YOUR CODE HERE - DO NOT FORGET TO ADD YOUR NAME / SECTION # ABOVE
-      //
-      return -1;
+      PriorityQueue<Integer> pq = new PriorityQueue<Integer>(Collections.reverseOrder());
+      for(int boulder : boulders) {
+          pq.add(boulder);
+      }
+      while(pq.size() != 1) {
+          int a = pq.poll();
+          int b = pq.poll();
+          int c = a - b;
+          pq.add(c);
+      }
+      return pq.peek();
   }
 
 
@@ -90,12 +96,23 @@ public class ProblemSolutions {
      */
 
     public static ArrayList<String> showDuplicates(ArrayList<String> input) {
-
-        //
-        //  YOUR CODE GOES HERE
-        //
-        return new ArrayList<>();  // Make sure result is sorted in ascending order
-
+        PriorityQueue<String> pq = new PriorityQueue<String>();
+        ArrayList<String> temp = new ArrayList<String>();
+        HashSet<String> s = new HashSet<String>();
+        ArrayList<String> output = new ArrayList<String>();
+        for(String word : input) {
+            String a = word;
+            if(temp.contains(a)) {
+                s.add(a);
+            } else {
+                temp.add(a);
+            }
+        }
+       pq.addAll(s);
+       while(pq.size() != 0) {
+           output.add(pq.poll());
+       }
+        return output;
     }
 
 
@@ -130,10 +147,26 @@ public class ProblemSolutions {
      */
 
     public static ArrayList<String> pair(int[] input, int k) {
-
-        //
-        //  YOUR CODE GOES HERE
-        //
-        return new ArrayList<>();  // Make sure returned lists is sorted as indicated above
+        ArrayList<String> output = new ArrayList<String>();
+        HashSet<Integer> s = new HashSet<Integer>();
+        PriorityQueue<String> pq = new PriorityQueue<String>();
+        for (int i : input) {
+            int c = k - i;
+            if (s.contains(c)) {
+                if (i < c) {
+                    pq.add("(" + i + ", " + c + ")");
+                } else {
+                    pq.add("(" + c + ", " + i + ")");
+                }
+            }
+            s.add(i);
+        }
+        while(pq.size() != 0) {
+            if(!output.contains(pq.peek())) {
+                output.add(pq.peek());
+            }
+            pq.poll();
+        }
+            return output;  // Make sure returned lists is sorted as indicated above
+        }
     }
-}
