@@ -167,6 +167,6 @@ public class ProblemSolutions {
             }
             pq.poll();
         }
-            return output;  // Make sure returned lists is sorted as indicated above
+            return output;
         }
     }
